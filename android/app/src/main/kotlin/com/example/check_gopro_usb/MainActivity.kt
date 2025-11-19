@@ -27,12 +27,6 @@ class MainActivity : FlutterActivity() {
     private var resolveListener: NsdManager.ResolveListener? = null
 
     private val GOPRO_VENDOR_ID = 0x2672
-    private val GOPRO_PRODUCT_IDS = mapOf(
-        0x0017 to "GoPro Hero 12 Black",
-        0x59 to "GoPro Hero 13 Black",
-        0x0042 to "GoPro Hero 12",
-        0x0043 to "GoPro Max"
-    )
 
     private val usbReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -59,15 +53,12 @@ class MainActivity : FlutterActivity() {
 
             when (intent.action) {
                 UsbManager.ACTION_USB_DEVICE_ATTACHED -> {
-                    val model = GOPRO_PRODUCT_IDS[device.productId]
-                    Log.d("GoPro", "Device attached: $model")
-                    if (model != null) {
-                        eventSink?.success(model)
-                    }
+                    Log.d("GoPro", "Device attached")
+                    eventSink?.success(true)
                 }
                 UsbManager.ACTION_USB_DEVICE_DETACHED -> {
                     Log.d("GoPro", "Device detached")
-                    eventSink?.success(null)
+                    eventSink?.success(false)
                 }
             }
         }
@@ -83,9 +74,9 @@ class MainActivity : FlutterActivity() {
             .setMethodCallHandler { call, result ->
                 when (call.method) {
                     "isGoProConnected" -> {
-                        val model = isGoProConnected()
-                        Log.d("GoPro", "isGoProConnected called, result: $model")
-                        result.success(model)
+                        val connected = isGoProConnected()
+                        Log.d("GoPro", "isGoProConnected called, result: $connected")
+                        result.success(connected)
                     }
                     "discoverGoProIP" -> {
                         Log.d("GoPro", "discoverGoProIP called")
@@ -146,7 +137,7 @@ class MainActivity : FlutterActivity() {
         unregisterReceiver(usbReceiver)
     }
 
-    private fun isGoProConnected(): String? {
+    private fun isGoProConnected(): Boolean {
         val usbManager = getSystemService(USB_SERVICE) as UsbManager
         val deviceList = usbManager.deviceList.values
 
@@ -155,14 +146,11 @@ class MainActivity : FlutterActivity() {
         for (device in deviceList) {
             Log.d("GoPro", "Device - VendorID: 0x${device.vendorId.toString(16)}, ProductID: 0x${device.productId.toString(16)}")
             if (device.vendorId == GOPRO_VENDOR_ID) {
-                val model = GOPRO_PRODUCT_IDS[device.productId]
-                Log.d("GoPro", "Found GoPro: $model")
-                if (model != null) {
-                    return model
-                }
+                Log.d("GoPro", "Found GoPro")
+                return true
             }
         }
-        return null
+        return false
     }
 
     private fun discoverGoProIP(callback: (String?) -> Unit) {

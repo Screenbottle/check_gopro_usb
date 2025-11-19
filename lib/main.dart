@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
       EventChannel('gopro_usb/events');
 
   String status = "Checking USB connection…";
-  String? goProModel;
+  bool goProConnected = false;
   String apiResponse = "";
   String? goProIP;
 
@@ -37,32 +37,32 @@ class _MyAppState extends State<MyApp> {
   
 
   Future<void> _checkOnce() async {
-    final String? model =
-        await _method.invokeMethod<String>('isGoProConnected');
+    final bool connected =
+        await _method.invokeMethod<bool>('isGoProConnected') ?? false;
 
     setState(() {
-      goProModel = model;
-      status = model != null
-          ? "📸 $model connected!"
-          : "❌ No GoPro detected";
+      goProConnected = connected;
+      status = connected
+          ? "📸 GoPro Connected!"
+          : "❌ No GoPro Detected";
     });
   }
 
   void _listenToEvents() {
     _events.receiveBroadcastStream().listen((event) {
-      final String? model = event as String?;
+      final bool connected = event as bool? ?? false;
 
       setState(() {
-        goProModel = model;
-        status = model != null
-            ? "📸 $model connected!"
-            : "❌ GoPro disconnected";
+        goProConnected = connected;
+        status = connected
+            ? "📸 GoPro Connected!"
+            : "❌ GoPro Disconnected";
         apiResponse = "";
         goProIP = null;
       });
       
       // When GoPro is detected, discover its IP via mDNS
-      if (model != null) {
+      if (connected) {
         _discoverGoProIP();
       }
     });
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _queryGoProAPI() async {
-    if (goProModel == null) {
+    if (!goProConnected) {
       setState(() {
         apiResponse = "GoPro not connected";
       });
@@ -205,7 +205,7 @@ class _MyAppState extends State<MyApp> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-                if (goProModel != null)
+                if (goProConnected)
                   Column(
                     children: [
                       ElevatedButton(

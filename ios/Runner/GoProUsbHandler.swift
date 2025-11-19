@@ -42,11 +42,11 @@ class GoProUsbHandler: NSObject {
         }
     }
     
-    private func isGoProConnected() -> String? {
+    private func isGoProConnected() -> Bool {
         // On iOS, we check if we can reach the GoPro IP
         // This is a simplified check - on USB-C iPhones, the GoPro will be reachable via USB
         let goProIP = "172.28.183.51"
-        return canReachIP(goProIP) ? "GoPro Hero 13 Black (iOS)" : nil
+        return canReachIP(goProIP)
     }
     
     private func discoverGoProIP(result: @escaping FlutterResult) {

@@ -25,6 +25,11 @@ A Flutter app that detects GoPro cameras connected via USB and communicates with
 - iOS 14+
 - Lightning iPhones (14 and earlier) are **not supported** due to hardware limitations
 
+## Tested Devices
+
+- OnePlus Nord CE5
+- Samsung Galaxy A55 5G
+
 ## Getting Started
 
 ### Android Setup

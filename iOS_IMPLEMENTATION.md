@@ -21,17 +21,17 @@ iOS support has been added for **iPhone 15+ (USB-C models only)**. The Lightning
 
 ## Key Features
 
-✅ USB Device Detection (via Network framework)
-✅ mDNS/Bonjour Discovery (_gopro-web._tcp)
-✅ Automatic Network Routing
-✅ Same API as Android implementation
-✅ Full HTTP API support
+- USB Device Detection (via Network framework)
+- mDNS/Bonjour Discovery (_gopro-web._tcp)
+- Automatic Network Routing
+- Same API as Android implementation
+- Full HTTP API support
 
 ## Limitations (Hardware-Based)
 
-❌ iPhone 14 and earlier (Lightning port)
-❌ iPad with Lightning
-❌ Any non-USB-C Apple device
+- iPhone 14 and earlier (Lightning port)
+- iPad with Lightning
+- Any non-USB-C Apple device
 
 ## Building for iOS
 

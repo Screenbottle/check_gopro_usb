@@ -4,12 +4,12 @@ A Flutter app that detects GoPro cameras connected via USB and communicates with
 
 ## Features
 
-- ✅ **USB Device Detection**: Automatically detects when a GoPro is connected via USB
-- ✅ **mDNS Discovery**: Discovers the GoPro's IP address using Bonjour/mDNS
-- ✅ **IP Construction**: Calculates the correct USB network IP from the GoPro serial number
-- ✅ **Network Binding**: Ensures requests route through the USB connection (Android)
-- ✅ **API Communication**: Queries the GoPro's HTTP API
-- ✅ **Cross-Platform**: Works on Android and iOS (USB-C iPhones only)
+- **USB Device Detection**: Automatically detects when a GoPro is connected via USB
+- **mDNS Discovery**: Discovers the GoPro's IP address using Bonjour/mDNS
+- **IP Construction**: Calculates the correct USB network IP from the GoPro serial number
+- **Network Binding**: Ensures requests route through the USB connection (Android)
+- **API Communication**: Queries the GoPro's HTTP API
+- **Cross-Platform**: Works on Android and iOS (USB-C iPhones only)
 
 ## Supported Devices
 
@@ -21,7 +21,7 @@ A Flutter app that detects GoPro cameras connected via USB and communicates with
 
 ### iOS
 
-- **iPhone 15 or later** (USB-C only) ⚠️
+- **iPhone 15 or later** (USB-C only)
 - iOS 14+
 - Lightning iPhones (14 and earlier) are **not supported** due to hardware limitations
 
@@ -66,6 +66,8 @@ For GoPro serial `C3601370011883`:
 - IP: `172.28.183.51:8080`
 
 ### Architecture
+
+Basic overview of the app architecture.
 
 #### Android
 
@@ -143,7 +145,7 @@ ios/
 
 ## License
 
-This project is provided as-is for educational and personal use.
+[MIT](LICENSE)
 
 ## Contributing
 

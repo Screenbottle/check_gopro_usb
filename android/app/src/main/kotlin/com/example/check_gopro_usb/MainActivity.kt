@@ -89,6 +89,11 @@ class MainActivity : FlutterActivity() {
                         val bound = bindToGoProNetwork()
                         result.success(bound)
                     }
+                    "unbindFromNetwork" -> {
+                        Log.d("GoPro", "unbindFromNetwork called")
+                        unbindFromNetwork()
+                        result.success(true)
+                    }
                     else -> result.notImplemented()
                 }
             }
@@ -317,6 +322,14 @@ class MainActivity : FlutterActivity() {
             Log.d("GoPro", "Error in bindToGoProNetwork: ${e.message}")
             e.printStackTrace()
             return false
+        }
+    }
+
+    private fun unbindFromNetwork() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            connectivityManager.bindProcessToNetwork(null)
+            Log.d("GoPro", "Unbound from any network")
         }
     }
 }

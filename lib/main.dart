@@ -153,6 +153,7 @@ class _MyAppState extends State<MyApp> {
 
           if (response.statusCode == 200 || response.statusCode == 404) {
             successfulEndpoint = endpoint;
+            await _method.invokeMethod('unbindFromNetwork');
             break;
           }
         } catch (e) {
@@ -188,6 +189,21 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+
+  Future<void> _queryDummyJson() async {
+    final url = Uri.parse('https://dummyjson.com/products/1');
+    try {
+      final response = await http.get(url);
+      setState(() {
+        apiResponse = "Response from DummyJson:\n\nStatus: ${response.statusCode}\n\nBody:\n${response.body}";
+      });
+    } catch (e) {
+      setState(() {
+        apiResponse = "Error fetching DummyJson: $e";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -216,6 +232,11 @@ class _MyAppState extends State<MyApp> {
                       ElevatedButton(
                         onPressed: _queryGoProAPI,
                         child: const Text("Query GoPro API"),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: _queryDummyJson, 
+                        child: const Text("Query DummyJson")
                       ),
                     ],
                   ),

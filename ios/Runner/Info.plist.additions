@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_gopro-web._tcp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app needs to discover and connect to your GoPro camera on the local network.</string>
+	<key>NSBonjourUsageDescription</key>
+	<string>This app uses Bonjour to discover GoPro cameras on your local network.</string>
+</dict>
+</plist>
